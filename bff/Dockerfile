@@ -1,4 +1,4 @@
-FROM amazoncorretto:21.0.2
+FROM mdsol/java21-jdk
 
 WORKDIR /app
 

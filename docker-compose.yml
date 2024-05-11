@@ -2,14 +2,14 @@ version: '3.8'
 services:
   db:
     image: mariadb:11.3.2
-    # command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
-    environment:
-    - MYSQL_ROOT_PASSWORD=root
-    - MYSQL_DATABASE=docker
-    - MYSQL_USER=root
-    - MYSQL_PASSWORD=root
-    # env_file:
-    #   - .env
+    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
+    env_file:
+      - .env
+    # environment:
+    #   - MYSQL_ROOT_PASSWORD=${USER}
+    #   - MYSQL_DATABASE=docker
+    #   - MYSQL_USER=${USER}
+    #   - MYSQL_PASSWORD=${PASSWORD}
     volumes:
       - ./data_base:/var/lib/mysql
     networks:
@@ -20,9 +20,11 @@ services:
     image: lingatsu/backend:latest
     ports:
       - 8080:8080
-    environment:
-      - DB_USERNAME=root
-      - DB_PASSWORD=root
+    env_file:
+      - .env
+    # environment:
+    #   - DB_USERNAME=${USER}
+    #   - DB_PASSWORD=${PASSWORD}
     depends_on:
       - db
     networks:
@@ -35,7 +37,7 @@ services:
       - 8081:80
     environment:
       - PMA_HOST=db
-      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_ROOT_PASSWORD=${PASSWORD}
     networks:
       - backend
       
