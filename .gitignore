@@ -1,2 +1,3 @@
-#exclude .env file from git
+#exclude .env file and data_base directory from git
 .env
+data_base/
