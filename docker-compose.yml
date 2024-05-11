@@ -5,16 +5,10 @@ services:
     command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
     env_file:
       - .env
-    # environment:
-    #   - MYSQL_ROOT_PASSWORD=${USER}
-    #   - MYSQL_DATABASE=docker
-    #   - MYSQL_USER=${USER}
-    #   - MYSQL_PASSWORD=${PASSWORD}
     volumes:
       - ./data_base:/var/lib/mysql
     networks:
       - backend
-
       
   bff:
     image: lingatsu/backend:latest
@@ -22,9 +16,6 @@ services:
       - 8080:8080
     env_file:
       - .env
-    # environment:
-    #   - DB_USERNAME=${USER}
-    #   - DB_PASSWORD=${PASSWORD}
     depends_on:
       - db
     networks:
@@ -32,12 +23,10 @@ services:
 
   phpmyadmin:
     image: phpmyadmin
-    # restart: unless-stopped
     ports:
       - 8081:80
-    environment:
-      - PMA_HOST=db
-      - MYSQL_ROOT_PASSWORD=${PASSWORD}
+    env_file:
+      - .env
     networks:
       - backend
       
@@ -45,12 +34,13 @@ services:
     image: lingatsu/frontend
     ports:
       - 4200:80
-    environment:
-      - BFF_URL=http://bff:80
+    env_file:
+      - .env
     depends_on:
       - db
     networks:
-      - backend
+      - frontend
 
 networks:
   backend:
+  frontend:
