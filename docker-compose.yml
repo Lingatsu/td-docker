@@ -2,12 +2,12 @@ version: '3.8'
 services:
   db:
     image: mariadb:11.3.2
-    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
+    # command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
     environment:
-    - MYSQL_ROOT_PASSWORD=password
+    - MYSQL_ROOT_PASSWORD=root
     - MYSQL_DATABASE=docker
-    - MYSQL_USER=username
-    - MYSQL_PASSWORD=password
+    - MYSQL_USER=root
+    - MYSQL_PASSWORD=root
     # env_file:
     #   - .env
     volumes:
@@ -21,8 +21,8 @@ services:
     ports:
       - 8081:8080
     environment:
-      - DB_USERNAME=username
-      - DB_PASSWORD=password
+      - DB_USERNAME=root
+      - DB_PASSWORD=root
     depends_on:
       - db
     networks:
@@ -30,11 +30,12 @@ services:
 
   phpmyadmin:
     image: phpmyadmin
-    restart: unless-stopped
+    # restart: unless-stopped
     ports:
       - 8080:80
     environment:
-      - PMA_ARBITRARY=1
+      - PMA_HOST=db
+      - MYSQL_ROOT_PASSWORD=root
     networks:
       - backend
       
@@ -43,8 +44,7 @@ services:
     ports:
       - 8082:80
     environment:
-      - DB_USERNAME=username
-      - DB_PASSWORD=password
+      - BFF_URL=http://bff:80
     depends_on:
       - db
     networks:
