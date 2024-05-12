@@ -58,7 +58,7 @@ Voici l'intérieur du fichier .env
 `BFF_URL=http://bff:80`
 Il est mutualisé pour être utilisé dans les différents service.
 
-`volumes:- ./data:/var/lib/mysql` nous permet de créer un volume à part, ce qui va créer un dossier avec l'intégrité de notre base de données mariadb, pour avoir un back up en cas de soucis.
+`volumes:- ./data_base:/var/lib/mysql` nous permet de créer un volume à part, ce qui va créer un dossier avec l'intégrité de notre base de données mariadb, pour avoir un back up en cas de soucis. Celui-ci n'est d'aileurs pas monté sur github. Il est spécifié dans le .gitignore à des fins de stockage et de sécurité. Il se crée à chaque lancement de l'application.
 `networks:- backend` permet aux conteneurs de communiquer entre eux de manière isolée du réseau hôte.
 
 2eme service : Back end :
@@ -76,7 +76,7 @@ Encore une fois pas de nouveautés, nous utilisons l'`image: phpmyadmin`, nous l
 Pas de nouveautés, nous utilisons l'image front build précédemment nommée `lingatsu/frontend`, nous lui attribuons le `port:-4200:80` pour accéder à cette interface grâce à l'adresse "localhost:4200" car c'est une application Angular et nous lui attribuons le `networks:-frontend` pour délimiter clairement la communication entre les services.
 
 
-`networks: backend:` et `networks: frontend:`nous permet de mettre en place la communication isolée des différents services comme nous l'avons vu plus tôt.
+`networks: backend:` et `networks: frontend:`nous permettent de mettre en place la communication isolée des différents services comme nous l'avons vu plus tôt.
 
 # Docker hub
 
